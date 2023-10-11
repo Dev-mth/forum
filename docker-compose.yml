@@ -29,8 +29,7 @@ services:
 
     # db mysql
     db:
-        image: mysql:5.7.22
-        platform: linux/x86_64
+        image: mysql:latest
         restart: unless-stopped
         environment:
             MYSQL_DATABASE: ${DB_DATABASE:-laravel}
@@ -41,6 +40,15 @@ services:
             - ./.docker/mysql/dbdata:/var/lib/mysql
         ports:
             - "3388:3306"
+        networks:
+            - laravel
+
+    phpmyadmin:
+        image: phpmyadmin:latest
+        ports:
+            - 9001:80
+        environment:
+            - PMA_ARBITRARY=1
         networks:
             - laravel
 
